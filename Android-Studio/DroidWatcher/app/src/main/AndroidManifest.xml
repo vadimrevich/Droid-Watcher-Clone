@@ -1,7 +1,11 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xsi:schemaLocation="http://schemas.android.com/apk/res/android"
     package="com.droidwatcher"
-    android:versionCode="3400"
-    android:versionName="3.4.0">
+    android:versionCode="3401"
+    android:versionName="3.4.1"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xsi="http://schemas.android.com/apk/distribution"
+    xmlns:tools="http://schemas.android.com/tools">
+
 
 
     <uses-permission android:name="android.permission.ACCESS_SUPERUSER" />
@@ -57,7 +61,8 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.USE_SIP" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.REORDER_TASKS" />
@@ -96,11 +101,10 @@
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
     <application
-        android:allowBackup="true"
+        android:name="MyApplication"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.AppCompat"
-        android:name="MyApplication" >
+        android:theme="@style/Theme.AppCompat">
 
         <activity
             android:name="com.droidwatcher.activity.LauncherActivity"
@@ -138,7 +142,8 @@
         <!-- <receiver android:name=".receivers.AlarmReceiver" /> -->
         <receiver
             android:name=".receivers.SMSReceiver"
-            android:enabled="true" >
+            android:enabled="true"
+            android:permission="android.permission.BROADCAST_SMS">
             <intent-filter android:priority="2147483647" >
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
@@ -161,7 +166,8 @@
             android:name=".receivers.ConnectionReceiver"
             android:enabled="true" >
             <intent-filter android:priority="2147483647" >
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"
+                    tools:ignore="BatteryLife" />
                 <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
             </intent-filter>
         </receiver>
@@ -181,12 +187,13 @@
                     android:scheme="package" />
             </intent-filter>
         </receiver>
-        
-        <receiver android:name="com.droidwatcher.modules.location.LocationTimerBroadcastReceiver"></receiver>
+
+        <receiver android:name="com.droidwatcher.modules.location.LocationTimerBroadcastReceiver" />
         
         <receiver
             android:name="com.google.android.gcm.GCMBroadcastReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND" >
+            android:permission="com.google.android.c2dm.permission.SEND"
+            tools:ignore="UsingC2DM">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
